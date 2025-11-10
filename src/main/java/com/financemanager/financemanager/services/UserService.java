@@ -14,22 +14,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import lombok.RequiredArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;  
 
 @Service
-@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    /* ---------- 1. production: use your real repository ----------
-    private final UserRepository repo;
-    ---------------------------------------------------------------*/
-    // 2. demo: simple in-memory store
     private final Map<String, User> store = new ConcurrentHashMap<>();
     private final PasswordEncoder encoder;
 
-    /* ----------- create (used by /register) ----------- */
+    public UserService(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
     public void create(String username, String rawPassword, Set<String> roles) {
         if (store.containsKey(username))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User exists");
@@ -44,7 +40,6 @@ public class UserService implements UserDetailsService {
         store.put(username, user);
     }
 
-    /* ----------- loadUserByUsername (Spring Security) ----------- */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails u = store.get(username);

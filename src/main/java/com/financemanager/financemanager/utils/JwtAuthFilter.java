@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
+    @SuppressWarnings("unused")
     private final UserDetailsService userDetailsService;
 
     public JwtAuthFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
