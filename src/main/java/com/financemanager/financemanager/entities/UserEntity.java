@@ -5,7 +5,11 @@ import lombok.*;
 
 @Entity
 @Table(name = "app_user")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
@@ -18,5 +22,5 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
-    private String roles;          // comma-separated: "ROLE_USER,ROLE_ADMIN"
+    private String roles; // comma-separated: "ROLE_USER,ROLE_ADMIN"
 }

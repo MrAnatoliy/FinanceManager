@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final AuthenticationManager authManager;
-    private final UserService userService;   // implements UserDetailsService
+    private final UserService userService; // implements UserDetailsService
     private final JwtUtil jwtUtil;
 
     @PostMapping("/register")

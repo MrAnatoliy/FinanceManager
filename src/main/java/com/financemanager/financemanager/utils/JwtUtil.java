@@ -22,7 +22,8 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
-    @Autowired private JwtProperties jwtProperties;
+    @Autowired
+    private JwtProperties jwtProperties;
 
     public String generate(String username, Collection<? extends GrantedAuthority> authorities) {
         Date now = new Date();
@@ -35,7 +36,8 @@ public class JwtUtil {
                         .collect(Collectors.joining(",")))
                 .setIssuedAt(now)
                 .setExpiration(expiry)
-                .signWith(Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8)), SignatureAlgorithm.HS256)
+                .signWith(Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8)),
+                        SignatureAlgorithm.HS256)
                 .compact();
     }
 

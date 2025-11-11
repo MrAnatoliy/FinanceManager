@@ -20,7 +20,7 @@ import com.financemanager.financemanager.entities.UserEntity;
 import com.financemanager.financemanager.repositories.UserRepository;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;  
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -38,8 +38,8 @@ public class UserService implements UserDetailsService {
         String rolesCsv = roles == null || roles.isEmpty()
                 ? "ROLE_USER"
                 : roles.stream()
-                       .map(r -> r.startsWith("ROLE_") ? r : "ROLE_" + r)
-                       .collect(Collectors.joining(","));
+                        .map(r -> r.startsWith("ROLE_") ? r : "ROLE_" + r)
+                        .collect(Collectors.joining(","));
 
         UserEntity ue = new UserEntity();
         ue.setUsername(username);
@@ -52,12 +52,11 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity ue = repo.findByUsername(username)
-                            .orElseThrow(() -> new UsernameNotFoundException(username));
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        List<? extends GrantedAuthority> authorities =
-        Arrays.stream(ue.getRoles().split(","))
-              .map(SimpleGrantedAuthority::new)
-              .toList();
+        List<? extends GrantedAuthority> authorities = Arrays.stream(ue.getRoles().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .toList();
 
         return new User(ue.getUsername(), ue.getPassword(), authorities);
     }

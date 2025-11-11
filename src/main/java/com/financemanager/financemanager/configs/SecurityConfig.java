@@ -19,7 +19,7 @@ import com.financemanager.financemanager.utils.JwtAuthFilter;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    /*  NO PasswordEncoder bean here any more  */
+    /* NO PasswordEncoder bean here any more */
 
     private final UserDetailsService userDetailsService;
 
@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authManager(HttpSecurity http,
-                                             PasswordEncoder encoder) throws Exception {
+            PasswordEncoder encoder) throws Exception {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(encoder);
         provider.setUserDetailsService(userDetailsService);
@@ -38,11 +38,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
-                                           JwtAuthFilter jwtAuthFilter) throws Exception {
+            JwtAuthFilter jwtAuthFilter) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers
-                    .frameOptions(frame -> frame.sameOrigin()) // or disable() for dev
+                        .frameOptions(frame -> frame.sameOrigin()) // or disable() for dev
                 )
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
