@@ -14,22 +14,30 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.financemanager.financemanager.entities.UserEntity;
 import com.financemanager.financemanager.repositories.UserRepository;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
+    private final WalletService walletService;
+
     private final UserRepository repo;
     private final PasswordEncoder encoder;
 
     /* ---------- create (used by /register) ---------- */
+
+    public UserEntity loadUser(String username) {
+        return repo.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
     @Transactional
     public void create(String username, String rawPassword, Set<String> roles) {
         if (repo.findByUsername(username).isPresent())
@@ -45,7 +53,11 @@ public class UserService implements UserDetailsService {
         ue.setUsername(username);
         ue.setPassword(encoder.encode(rawPassword));
         ue.setRoles(rolesCsv);
+
         repo.save(ue);
+
+        // Creating new wallet for user
+        walletService.create(ue);
     }
 
     /* ---------- Spring-Security lookup ---------- */

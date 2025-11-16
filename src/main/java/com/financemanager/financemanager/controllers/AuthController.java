@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.financemanager.financemanager.DTOs.LoginDto;
-import com.financemanager.financemanager.DTOs.RegisterDto;
+import com.financemanager.financemanager.DTOs.auth.LoginDto;
+import com.financemanager.financemanager.DTOs.auth.RegisterDto;
 import com.financemanager.financemanager.services.UserService;
 import com.financemanager.financemanager.utils.JwtUtil;
 

@@ -1,4 +1,4 @@
-package com.financemanager.financemanager.DTOs;
+package com.financemanager.financemanager.DTOs.auth;
 
 import java.util.Set;
 
