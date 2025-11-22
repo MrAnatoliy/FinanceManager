@@ -14,10 +14,10 @@ import lombok.*;
 public class WalletEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long wallet_id;
+    private Long walletId;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private UserEntity user;
 
     private int balance;

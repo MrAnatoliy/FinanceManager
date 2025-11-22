@@ -38,6 +38,10 @@ public class UserService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
+    public boolean userExists(String username) {
+        return repo.findByUsername(username).isPresent();
+    }
+
     @Transactional
     public void create(String username, String rawPassword, Set<String> roles) {
         if (repo.findByUsername(username).isPresent())

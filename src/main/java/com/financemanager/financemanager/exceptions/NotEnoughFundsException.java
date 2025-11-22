@@ -4,6 +4,6 @@ import com.financemanager.financemanager.entities.OperationEntity;
 
 public class NotEnoughFundsException extends BuisnessException{
     public NotEnoughFundsException(int missing, OperationEntity operation){
-        super("Not enough funds (" + missing + ") for " + operation.getOperation_type().toString().toLowerCase() + " operation");
+        super("Not enough funds (" + missing + ") for " + operation.getOperationType().toString().toLowerCase() + " operation");
     }
 }

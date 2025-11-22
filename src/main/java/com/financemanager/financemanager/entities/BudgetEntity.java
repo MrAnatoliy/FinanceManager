@@ -1,10 +1,11 @@
 package com.financemanager.financemanager.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,19 +15,26 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "category")
+@Table(name = "budget")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
-public class CategoryEntity {
+public class BudgetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long operationId;
 
-    @Column(unique = true)
-    private String categoryName;
-    private String categoryRepresentationRu;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "walletId")
+    private WalletEntity wallet;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private CategoryEntity budgetCategory;
+
+    private int budgetLimit;
+    private int currentBudgetAmount;
 }
